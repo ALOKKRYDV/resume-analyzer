@@ -2,11 +2,8 @@ services:
   - type: web
     name: resume-analyzer
     env: python
-    buildCommand: pip install -r requirements.txt && python -m spacy download en_core_web_sm && python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords'); nltk.download('wordnet')"
+    plan: free
+    runtime: python
+    pythonVersion: 3.10.13
+    buildCommand: pip install -r requirements.txt
     startCommand: gunicorn app:app
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.0
-      - key: SECRET_KEY
-        generateValue: true
-    autoDeploy: true
