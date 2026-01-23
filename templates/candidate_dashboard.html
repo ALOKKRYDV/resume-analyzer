@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Find Jobs - Resume Analyzer{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-briefcase"></i> Available Job Openings</h1>
+        <p>Upload your resume to see how well you match with each position</p>
+    </div>
+</div>
+
+<div class="container">
+    {% if jobs %}
+        <div class="job-stats">
+            <p><strong>{{ jobs|length }}</strong> active job openings available</p>
+        </div>
+        
+        <div class="jobs-grid">
+            {% for job in jobs %}
+            <div class="job-card">
+                <div class="job-header">
+                    <div>
+                        <h3>{{ job.title }}</h3>
+                        <p class="company-name"><i class="fas fa-building"></i> {{ job.company }}</p>
+                    </div>
+                    <span class="job-badge">Active</span>
+                </div>
+                
+                <div class="job-info">
+                    {% if job.location %}
+                    <span><i class="fas fa-map-marker-alt"></i> {{ job.location }}</span>
+                    {% endif %}
+                    {% if job.experience %}
+                    <span><i class="fas fa-briefcase"></i> {{ job.experience }}</span>
+                    {% endif %}
+                    {% if job.salary_range %}
+                    <span><i class="fas fa-money-bill-wave"></i> {{ job.salary_range }}</span>
+                    {% endif %}
+                </div>
+                
+                <div class="job-description">
+                    <p>{{ job.description[:200] }}{% if job.description|length > 200 %}...{% endif %}</p>
+                </div>
+                
+                <div class="job-skills">
+                    <strong>Required Skills:</strong>
+                    <div class="skills-tags">
+                        {% set skills = job.required_skills.split(',')[:8] %}
+                        {% for skill in skills %}
+                            <span class="skill-tag">{{ skill.strip() }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <div class="job-footer">
+                    <span class="job-date">
+                        <i class="fas fa-clock"></i> Posted {{ job.posted_date.strftime('%b %d, %Y') }}
+                    </span>
+                    <div>
+                        <a href="/job/{{ job.id }}" class="btn btn-sm btn-secondary">View Details</a>
+                        <a href="/apply/{{ job.id }}" class="btn btn-sm btn-primary">Apply Now</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <h2>No Jobs Available</h2>
+            <p>There are no active job openings at the moment. Please check back later!</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

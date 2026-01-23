@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Post a Job - Resume Analyzer{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="container">
+        <h1><i class="fas fa-plus-circle"></i> Post a New Job</h1>
+        <p>Fill in the details to create a new job posting</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="form-card">
+        <form method="POST" class="job-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="title">Job Title *</label>
+                    <input type="text" id="title" name="title" required class="form-control" 
+                           placeholder="e.g., Senior Python Developer">
+                </div>
+                
+                <div class="form-group">
+                    <label for="company">Company Name *</label>
+                    <input type="text" id="company" name="company" required class="form-control" 
+                           placeholder="e.g., Tech Corp Inc.">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" class="form-control" 
+                           placeholder="e.g., New York, NY / Remote">
+                </div>
+                
+                <div class="form-group">
+                    <label for="experience">Experience Required</label>
+                    <input type="text" id="experience" name="experience" class="form-control" 
+                           placeholder="e.g., 3-5 years">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="salary_range">Salary Range</label>
+                <input type="text" id="salary_range" name="salary_range" class="form-control" 
+                       placeholder="e.g., $80,000 - $120,000">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Job Description *</label>
+                <textarea id="description" name="description" required class="form-control" rows="8" 
+                          placeholder="Describe the role, responsibilities, and what you're looking for in a candidate..."></textarea>
+                <span class="form-help">Provide a detailed description of the position</span>
+            </div>
+
+            <div class="form-group">
+                <label for="required_skills">Required Skills * (comma-separated)</label>
+                <textarea id="required_skills" name="required_skills" required class="form-control" rows="4" 
+                          placeholder="e.g., Python, Django, Flask, REST API, Docker, AWS, PostgreSQL, Git"></textarea>
+                <span class="form-help">Enter skills separated by commas. These will be used for resume matching.</span>
+            </div>
+
+            <div class="form-actions">
+                <a href="/company" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-check"></i> Post Job
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="tips-card">
+        <h3><i class="fas fa-lightbulb"></i> Tips for Better Job Postings</h3>
+        <ul>
+            <li>Be specific about required skills to get better candidate matches</li>
+            <li>Include both technical and soft skills in the required skills list</li>
+            <li>Provide clear salary ranges to attract quality candidates</li>
+            <li>Write detailed job descriptions to help candidates understand the role</li>
+            <li>Update job postings regularly to keep them relevant</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
