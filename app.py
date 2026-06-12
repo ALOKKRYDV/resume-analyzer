@@ -24,6 +24,11 @@ app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max file size
 app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'docx', 'doc'}
 
+database_url = os.environ.get('DATABASE_URL', 'sqlite:///resume_analyzer.db')
+if database_url.startswith('postgres://'):
+    database_url = database_url.replace('postgres://', 'postgresql://', 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+
 db.init_app(app)
 
 # Ensure upload folder exists
