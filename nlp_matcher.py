@@ -34,9 +34,9 @@ class NLPMatcher:
             
             # Weighted final score
             final_score = (
-                tfidf_score * 0.35 +      # TF-IDF similarity weight
-                skill_match['score'] * 0.45 +  # Skills match weight
-                keyword_score * 0.20       # Keyword match weight
+                tfidf_score * 0.10 +      # TF-IDF similarity weight
+                skill_match['score'] * 0.75 +  # Skills match weight
+                keyword_score * 0.15       # Keyword match weight
             )
             
             # Generate recommendations
