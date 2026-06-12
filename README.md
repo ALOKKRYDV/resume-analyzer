@@ -1,248 +1,100 @@
-# 🤖 AI-Powered Resume Analyzer
+# AI-Powered Resume Analyzer
 
-An intelligent resume analysis platform that uses Natural Language Processing (NLP) to match candidate resumes with job descriptions, providing detailed match scores and personalized recommendations.
+An AI-powered resume analyzer built with Flask that matches candidate resumes to job descriptions, calculates a match score, and shows matched skills, missing skills, and recommendations.
 
-## ✨ Features
+## Features
 
-### For Job Seekers
-- 📄 **Resume Upload** - Support for PDF and DOCX formats
-- 🎯 **Smart Matching** - AI-powered skill matching with job requirements
-- 📊 **Match Score** - Get percentage match scores using TF-IDF and NLP
-- 🔍 **Skill Analysis** - Identify matched and missing skills
-- 💡 **Recommendations** - Personalized suggestions to improve your resume
-- 📈 **Detailed Reports** - Comprehensive analysis breakdown
+- Resume upload support for PDF, DOCX, and DOC files
+- Job posting and application management
+- Resume parsing for skills, education, experience, and contact details
+- Resume-to-job matching with match score and recommendations
+- Candidate and company dashboards
+- Application result view with detailed analysis
 
-### For Companies
-- 💼 **Job Posting** - Easy job posting with detailed requirements
-- 👥 **Application Management** - View and manage all applications
-- 🏆 **Ranked Candidates** - Automatic ranking by match score
-- 📉 **Analytics** - Application statistics and insights
-- ⚡ **Quick Screening** - Instantly identify top candidates
+## Tech Stack
 
-## 🛠️ Technology Stack
+- Python
+- Flask
+- Flask-SQLAlchemy
+- SQLite
+- PyPDF2
+- python-docx
+- NLTK
+- HTML, CSS, JavaScript
 
-- **Backend:** Python, Flask
-- **NLP/ML:** scikit-learn, NLTK, spaCy
-- **Resume Parsing:** PyPDF2, python-docx
-- **Database:** SQLAlchemy (SQLite)
-- **Frontend:** HTML5, CSS3, JavaScript
-- **Data Analysis:** pandas, numpy
+## Prerequisites
 
-## 📋 Prerequisites
+- Python installed on your machine
+- A virtual environment named `venv` in the project root
 
-- Python 3.8 or higher
-- pip (Python package manager)
+## Setup
 
-## 🚀 Installation
+1. Open the project folder.
+2. Create and activate the virtual environment if it does not already exist.
 
-1. **Clone or navigate to the project directory**
-   ```bash
-   cd "resume analyzer"
-   ```
-
-2. **Create a virtual environment (recommended)**
-   ```bash
-   python -m venv venv
-   
-   # On Windows
-   venv\Scripts\activate
-   
-   # On macOS/Linux
-   source venv/bin/activate
-   ```
-
-3. **Install required packages**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Download NLTK data (required for NLP)**
-   ```python
-   python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
-   ```
-
-5. **Initialize the database**
-   ```bash
-   python app.py
-   ```
-   The database will be created automatically on first run.
-
-## 💻 Usage
-
-1. **Start the application**
-   ```bash
-   python app.py
-   ```
-
-2. **Open your browser and navigate to**
-   ```
-   http://localhost:5000
-   ```
-
-3. **For Job Seekers:**
-   - Click "Find Jobs" to browse available positions
-   - Select a job and click "Apply Now"
-   - Fill in your details and upload your resume (PDF/DOCX)
-   - View your instant match score and analysis
-
-4. **For Companies:**
-   - Click "Company Portal" to access the dashboard
-   - Click "Post New Job" to create a job listing
-   - View applications ranked by match score
-   - Review candidate profiles and match analysis
-
-## 📁 Project Structure
-
-```
-resume analyzer/
-├── app.py                  # Main Flask application
-├── models.py               # Database models
-├── resume_parser.py        # Resume parsing logic
-├── nlp_matcher.py          # NLP matching algorithms
-├── requirements.txt        # Python dependencies
-├── .gitignore             # Git ignore rules
-├── templates/             # HTML templates
-│   ├── base.html
-│   ├── index.html
-│   ├── candidate_dashboard.html
-│   ├── company_dashboard.html
-│   ├── post_job.html
-│   ├── apply_job.html
-│   ├── application_result.html
-│   ├── job_details.html
-│   └── view_applications.html
-├── static/
-│   └── css/
-│       └── style.css      # Styling
-├── uploads/               # Resume storage
-└── README.md             # Documentation
+```powershell
+python -m venv venv
+.\venv\Scripts\Activate.ps1
 ```
 
-## 🔧 Configuration
+3. Install the dependencies.
 
-Key settings in `app.py`:
-
-```python
-app.config['SECRET_KEY'] = 'your-secret-key-change-this-in-production'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///resume_analyzer.db'
-app.config['UPLOAD_FOLDER'] = 'uploads'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max
+```powershell
+.\venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-## 🧠 How It Works
+## Run the App
 
-### 1. Resume Parsing
-- Extracts text from PDF/DOCX files
-- Identifies key information (email, phone, skills, experience, education)
-- Processes content using regex and text parsing
+From the project root, start the application with:
 
-### 2. NLP Matching
-- **TF-IDF Vectorization:** Converts resume and job description to numerical vectors
-- **Cosine Similarity:** Calculates similarity between vectors
-- **Skill Matching:** Exact and fuzzy matching of skills
-- **Keyword Analysis:** Identifies important terms and their frequency
-
-### 3. Scoring Algorithm
-```
-Final Score = (TF-IDF Score × 35%) + (Skill Match × 45%) + (Keyword Match × 20%)
+```powershell
+.\venv\Scripts\python.exe app.py
 ```
 
-### 4. Recommendations
-- AI-generated suggestions based on match score
-- Missing skills identification
-- Resume improvement tips
+Then open:
 
-## 📊 Match Score Interpretation
-
-- **80-100%** - Excellent Match (Highly qualified)
-- **60-79%** - Good Match (Strong candidate)
-- **40-59%** - Moderate Match (Some qualifications)
-- **0-39%** - Limited Match (Needs development)
-
-## 🎨 Features Breakdown
-
-### Resume Parser
-- Multi-format support (PDF, DOCX, DOC)
-- Automatic skill extraction (100+ predefined skills)
-- Education and experience parsing
-- Contact information extraction
-
-### NLP Matcher
-- TF-IDF vectorization with unigrams and bigrams
-- Skill synonym matching
-- Weighted scoring system
-- Detailed breakdown analysis
-
-### Web Interface
-- Responsive design
-- Modern UI with smooth animations
-- Real-time file upload preview
-- Interactive charts and visualizations
-
-## 🔒 Security Features
-
-- File type validation
-- File size limits (16MB)
-- Secure filename handling
-- SQL injection protection via SQLAlchemy ORM
-
-## 🚀 Future Enhancements
-
-- [ ] User authentication system
-- [ ] Email notifications
-- [ ] PDF report generation
-- [ ] Advanced analytics dashboard
-- [ ] Multi-language support
-- [ ] LinkedIn integration
-- [ ] Video interview scheduling
-- [ ] Automated email responses
-- [ ] Machine learning model training
-- [ ] Resume template suggestions
-
-## 🐛 Troubleshooting
-
-**Issue: Package installation errors**
-```bash
-pip install --upgrade pip
-pip install -r requirements.txt --no-cache-dir
+```text
+http://127.0.0.1:5000
 ```
 
-**Issue: Database errors**
-```bash
-# Delete the database and reinitialize
-rm resume_analyzer.db
+If you already activated the virtual environment, you can also use:
+
+```powershell
 python app.py
 ```
 
-**Issue: File upload errors**
-- Check file size (max 16MB)
-- Ensure file format is PDF or DOCX
-- Verify uploads folder exists
+## Project Structure
 
-## 📝 License
+```text
+resume analyzer/
+├── app.py
+├── models.py
+├── resume_parser.py
+├── nlp_matcher.py
+├── requirements.txt
+├── runtime.txt
+├── templates/
+├── static/
+└── uploads/
+```
 
-This project is open-source and available for educational purposes.
+## Main Pages
 
-## 👨‍💻 Contributing
+- Home page
+- Candidate dashboard
+- Company dashboard
+- Post job page
+- Job details page
+- Apply job page
+- Application result page
+- View applications page
 
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest new features
-- Submit pull requests
-- Improve documentation
+## Notes
 
-## 📧 Support
+- The app creates the database automatically on first run.
+- Uploaded resumes are stored in the `uploads/` folder.
+- If imports are shown as unresolved in VS Code, make sure the workspace interpreter points to `venv\\Scripts\\python.exe`.
 
-For questions or support, please open an issue in the repository.
+## License
 
-## 🙏 Acknowledgments
-
-- Flask framework
-- scikit-learn for NLP capabilities
-- PyPDF2 and python-docx for document parsing
-- Font Awesome for icons
-
----
-
-**Made with ❤️ using Python and NLP**
-
+No license has been specified for this project.
