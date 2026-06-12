@@ -1,16 +1,13 @@
 import re
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
 
 class NLPMatcher:
     def __init__(self):
-        self.vectorizer = TfidfVectorizer(
-            lowercase=True,
-            stop_words='english',
-            ngram_range=(1, 2),  # Use unigrams and bigrams
-            max_features=5000
-        )
+        self.stop_words = {
+            'the', 'and', 'for', 'with', 'this', 'that', 'from', 'have', 'will',
+            'are', 'you', 'can', 'our', 'more', 'about', 'into', 'through',
+            'than', 'only', 'some', 'could', 'other', 'your', 'a', 'an', 'of',
+            'to', 'in', 'on', 'at', 'by', 'as', 'it', 'be', 'or', 'is', 'are'
+        }
     
     def match_resume_to_job(self, resume_data, job):
         """
@@ -97,13 +94,20 @@ class NLPMatcher:
         return ' '.join(filter(None, text_parts))
     
     def _calculate_tfidf_similarity(self, text1, text2):
-        """Calculate TF-IDF cosine similarity between two texts"""
-        try:
-            tfidf_matrix = self.vectorizer.fit_transform([text1, text2])
-            similarity = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])[0][0]
-            return similarity * 100  # Convert to percentage
-        except:
+        """Calculate a lightweight token overlap similarity between two texts"""
+        tokens1 = self._tokenize(text1)
+        tokens2 = self._tokenize(text2)
+
+        if not tokens1 or not tokens2:
             return 0
+
+        set1 = set(tokens1)
+        set2 = set(tokens2)
+        union = set1 | set2
+        if not union:
+            return 0
+
+        return (len(set1 & set2) / len(union)) * 100
     
     def _extract_skills_list(self, skills_text):
         """Convert comma-separated skills string to list"""
@@ -194,17 +198,14 @@ class NLPMatcher:
     def _extract_keywords(self, text):
         """Extract important keywords from text"""
         # Remove common words and extract unique terms
-        words = re.findall(r'\b[a-z]{3,}\b', text.lower())
-        
-        # Remove very common words
-        stop_words = {'the', 'and', 'for', 'with', 'this', 'that', 'from', 'have',
-                     'will', 'are', 'you', 'can', 'our', 'more', 'about', 'into',
-                     'through', 'than', 'only', 'some', 'could', 'other'}
-        
-        keywords = [w for w in words if w not in stop_words]
+        keywords = [w for w in self._tokenize(text) if len(w) >= 3]
         
         # Return unique keywords
         return list(set(keywords))[:50]  # Limit to top 50 keywords
+
+    def _tokenize(self, text):
+        words = re.findall(r'\b[a-z]{2,}\b', text.lower())
+        return [word for word in words if word not in self.stop_words]
     
     def _generate_recommendations(self, skill_match, resume_skills, job_skills, score):
         """Generate personalized recommendations"""
